@@ -29,6 +29,14 @@ export const formatIDR = (n: number): string => {
 export const countIDR = (n: number): string =>
   `Rp ${n.toLocaleString("en-US")}`;
 
+/** Split an IDR amount into an abbreviated value + unit for display. */
+export function abbreviateIDR(n: number): { value: number; unit: string; decimals: number } {
+  if (n >= 1e12) return { value: n / 1e12, unit: "trillion", decimals: 1 };
+  if (n >= 1e9) return { value: n / 1e9, unit: "billion", decimals: 1 };
+  if (n >= 1e6) return { value: n / 1e6, unit: "million", decimals: 0 };
+  return { value: n, unit: "rupiah", decimals: 0 };
+}
+
 /**
  * Relatable comparables so the scale of loss lands emotionally.
  * Sources cited per comparable.
