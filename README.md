@@ -4,6 +4,11 @@ An independent recap of **Indonesian Corruption Watch (ICW)** reports: who stole
 from the people of Indonesia, scaled to things you can feel — teachers, schools, roads.
 Not affiliated with ICW; every figure links back to its source PDF page.
 
+| | |
+|---|---|
+| ![Homepage — the ledger](docs/screenshots/home.png) | ![Case detail — Timah](docs/screenshots/case-detail.png) |
+| ![Methodology](docs/screenshots/methodology.png) | |
+
 ## Stack
 
 - **Site**: Astro 5 + Tailwind 4, static output, hand-built SVG/CSS visuals (no chart libs).

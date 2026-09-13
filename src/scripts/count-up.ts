@@ -20,15 +20,29 @@ function animate(el: HTMLElement) {
 }
 
 const els = document.querySelectorAll<HTMLElement>("[data-count-to]");
-const io = new IntersectionObserver(
-  (entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting) {
-        animate(e.target as HTMLElement);
-        io.unobserve(e.target);
+
+// Respect reduced motion: render final values immediately
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  for (const el of els) {
+    const to = Number(el.dataset.countTo ?? "0");
+    const decimals = Number(el.dataset.decimals ?? "0");
+    const fmt = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+    el.textContent = fmt.format(to) + (el.dataset.suffix ?? "");
+  }
+} else {
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          animate(e.target as HTMLElement);
+          io.unobserve(e.target);
+        }
       }
-    }
-  },
-  { threshold: 0.4 },
-);
-els.forEach((el) => io.observe(el));
+    },
+    { threshold: 0.4 },
+  );
+  els.forEach((el) => io.observe(el));
+}
