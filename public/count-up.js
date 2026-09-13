@@ -1,10 +1,10 @@
 // Count-up animation for elements with [data-count-to]
-function animate(el: HTMLElement) {
+function animate(el) {
   const to = Number(el.dataset.countTo ?? "0");
   const dur = 1600;
   const start = performance.now();
   const fmt = new Intl.NumberFormat("en-US");
-  const tick = (t: number) => {
+  const tick = (t) => {
     const p = Math.min(1, (t - start) / dur);
     const eased = 1 - Math.pow(1 - p, 4);
     el.textContent = fmt.format(Math.round(to * eased));
@@ -13,12 +13,12 @@ function animate(el: HTMLElement) {
   requestAnimationFrame(tick);
 }
 
-const els = document.querySelectorAll<HTMLElement>("[data-count-to]");
+const els = document.querySelectorAll("[data-count-to]");
 const io = new IntersectionObserver(
   (entries) => {
     for (const e of entries) {
       if (e.isIntersecting) {
-        animate(e.target as HTMLElement);
+        animate(e.target);
         io.unobserve(e.target);
       }
     }

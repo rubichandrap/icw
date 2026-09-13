@@ -19,7 +19,9 @@ const statusStyle: Record<string, string> = {
 <article class="border-2 border-ink bg-paper p-6">
   <div class="flex items-start justify-between gap-4">
     <div>
-      <h3 class="font-display text-2xl font-bold leading-tight">{c.name}</h3>
+      <h3 class="font-display text-2xl font-bold leading-tight">
+        <a href={`/cases/${c.id}/`} class="hover:text-blood hover:underline decoration-2 underline-offset-4">{c.name}</a>
+      </h3>
       <p class="text-sm text-ink/60">
         {c.institution} · {c.year} · <span class="uppercase tracking-wider">{c.sector}</span>
       </p>

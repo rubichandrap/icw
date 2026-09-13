@@ -1,0 +1,71 @@
+---
+import Base from "../../layouts/Base.astro";
+import MoneyScale from "../../components/MoneyScale.astro";
+import { loadReports, formatIDR, countIDR } from "../../lib/data";
+
+export function getStaticPaths() {
+  return loadReports().flatMap((r) =>
+    r.cases.map((c) => ({
+      params: { id: c.id },
+      props: { case: c, report: r },
+    })),
+  );
+}
+const { case: c, report } = Astro.props;
+const statusLabel: Record<string, string> = {
+  fugitive: "Fugitive",
+  suspect: "Named suspect",
+  "on-trial": "On trial",
+  convicted: "Convicted",
+  acquitted: "Acquitted",
+};
+---
+<Base title={`${c.name} — The Ledger of Stolen Money`} description={c.description}>
+  <article class="py-12 max-w-3xl">
+    <a href="/#the-wall" class="text-sm uppercase tracking-widest hover:text-blood">&larr; Back to the ledger</a>
+    <p class="mt-8 text-sm uppercase tracking-widest text-ink/50">{report.year} · {c.sector}</p>
+    <h1 class="font-display text-4xl md:text-5xl font-black leading-tight">{c.name}</h1>
+    <p class="mt-2 text-ink/60">{c.institution}</p>
+
+    <section class="mt-8 border-y-4 border-double border-ink py-6">
+      <p class="text-sm uppercase tracking-widest">State loss recorded</p>
+      <p class="font-display text-5xl font-black text-blood num">{countIDR(c.stateLossIDR)}</p>
+    </section>
+
+    <MoneyScale amountIDR={c.stateLossIDR} label="Scaled to what it could have funded" />
+
+    <h2 class="mt-10 font-display text-2xl font-bold">What happened</h2>
+    <p class="mt-2 leading-relaxed">{c.description}</p>
+
+    <h2 class="mt-10 font-display text-2xl font-bold">The people</h2>
+    {c.suspects.length === 0 ? (
+      <p class="mt-2 text-ink/60">No individuals are named for this case in the source report yet.</p>
+    ) : (
+      <ul class="mt-3 divide-y divide-rule">
+        {c.suspects.map((s) => (
+          <li class="flex items-center justify-between py-3">
+            <div>
+              <p class="font-semibold">{s.name}</p>
+              <p class="text-sm text-ink/60">{s.role}</p>
+            </div>
+            <span class={`px-2 py-1 text-xs font-semibold uppercase tracking-wider ${s.status === "convicted" ? "bg-blood text-paper" : s.status === "fugitive" ? "bg-ink text-paper" : "border border-ink"}`}>
+              {statusLabel[s.status] ?? s.status}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {c.sentence && (
+      <>
+        <h2 class="mt-10 font-display text-2xl font-bold">The sentence</h2>
+        <p class="mt-2">{c.sentence}</p>
+      </>
+    )}
+
+    <p class="mt-10 text-sm text-ink/50">
+      Source: <a class="underline hover:text-blood" href={report.sourceUrl}>{report.title}</a>, page {c.sourcePage}.
+      "Potential state loss" figures are ICW monitoring estimates, not court-awarded restitution.
+    </p>
+  </article>
+</Base>
