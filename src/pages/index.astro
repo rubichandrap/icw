@@ -56,7 +56,7 @@ const maxSector = sectors[0]?.[1] ?? 1;
 
   <!-- MONEY AS SCALE -->
   <section class="py-16">
-    <h2 class="font-display text-3xl font-bold">What Rp 28.4 trillion actually is</h2>
+    <h2 class="font-display text-3xl font-bold">What {reports[0]?.year ?? "the latest year"}'s loss actually is</h2>
     <MoneyScale amountIDR={reports[0]?.totals.totalStateLossIDR ?? 0}
       label={`The most recent report year (${reports[0]?.year ?? "—"}) recorded:`} />
     <p class="text-sm text-ink/60">

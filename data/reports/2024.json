@@ -1,29 +1,29 @@
 {
   "year": 2024,
-  "title": "ICW Year-End Report 2024 (Laporan Akhir Tahun)",
-  "sourceUrl": "https://antikorupsi.org/en/dokumen",
+  "title": "ICW Tren Penindakan Tindak Pidana Korupsi 2024 (released Sept 2025)",
+  "sourceUrl": "https://www.cnbcindonesia.com/news/20250930200052-4-671676/icw-penanganan-korupsi-turun-drastis-364-kasus-tak-disidik-di-2024",
   "fetchedAt": "2026-09-14T00:00:00.000Z",
   "language": "en",
   "totals": {
-    "totalStateLossIDR": 300000000000000,
-    "caseCount": 443,
-    "suspectCount": 1085,
+    "totalStateLossIDR": 279900000000000,
+    "caseCount": 364,
+    "suspectCount": 888,
     "sourcePage": 1
   },
   "cases": [
     {
       "id": "timah-2024",
-      "name": "Tin trade corruption (Timah case, continuing)",
-      "description": "Regulatory capture of the tin trading system in Bangka Belitung; among the largest state-loss cases ever recorded.",
+      "name": "Tin trade corruption (Timah case)",
+      "description": "Regulatory capture of the tin trading system in Bangka Belitung; the BPKP state audit attributed Rp 271 trillion in losses — the single largest driver of 2024's record total, up 885% from 2023.",
       "year": 2024,
       "sector": "natural-resources",
       "institution": "Ministry of Trade / Bangka Belitung administration",
       "suspects": [
-        { "name": "Harvey Moeis", "role": "Private-sector actor", "status": "convicted" }
+        { "name": "Harvey Moeis", "role": "Private-sector trader", "status": "convicted" }
       ],
-      "stateLossIDR": 300000000000000,
-      "sentence": "6.5 years (first instance, widely criticized as too light); under appeal",
-      "sourcePage": 4
+      "stateLossIDR": 271000000000000,
+      "sentence": "6.5 years (first instance, widely criticized as too light); increased to life imprisonment on appeal",
+      "sourcePage": 1
     }
   ]
 }
