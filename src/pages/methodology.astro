@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Methodology — The Ledger of Stolen Money">
+  <section class="py-16 max-w-3xl">
+    <h1 class="font-display text-4xl font-black">Methodology</h1>
+
+    <h2 class="mt-8 font-display text-2xl font-bold">Where the data comes from</h2>
+    <p class="mt-3">
+      All figures on this site are extracted from published reports by
+      <a class="underline hover:text-blood" href="https://antikorupsi.org">Indonesian Corruption Watch (ICW)</a> —
+      primarily the annual <em>Potret Korupsi di Indonesia</em> / Year-End Report and the
+      <em>Tren Vonis</em> (verdict trend) reports. We fetch documents only from hosts on a
+      trusted allowlist configured in the repository's <code>.env</code>.
+    </p>
+
+    <h2 class="mt-8 font-display text-2xl font-bold">How reports become this site</h2>
+    <ol class="mt-3 list-decimal space-y-2 pl-6">
+      <li>A scheduled job scrapes ICW's public document index for new reports.</li>
+      <li>PDFs are downloaded into <code>data/sources/</code> and committed for traceability.</li>
+      <li>An agent extracts cases, suspects, and state losses into a strict JSON schema — every amount must cite the PDF page it came from.</li>
+      <li>Records are validated (duplicate IDs, totals reconciliation, page citations). Anything failing validation is flagged, never published.</li>
+      <li>Validated data reaches the site only through a human-reviewed pull request.</li>
+    </ol>
+
+    <h2 class="mt-8 font-display text-2xl font-bold">The comparables</h2>
+    <p class="mt-3">
+      The "what that money could have been" comparisons use round, public figures:
+      a starting civil-servant teacher salary of roughly Rp 5.5 million per month,
+      a school building at roughly Rp 15 billion, and a kilometer of new national
+      road at roughly Rp 15 billion. They are approximations meant to convey scale,
+      not audited budgets. The banknote stack assumes a Rp 100,000 note is about
+      0.11&nbsp;mm thick.
+    </p>
+
+    <h2 class="mt-8 font-display text-2xl font-bold">Caveats</h2>
+    <ul class="mt-3 list-disc space-y-2 pl-6">
+      <li>"Potential state losses" are ICW's monitoring estimates, not court-awarded restitution.</li>
+      <li>Seed data before the first pipeline run is hand-curated and marked; verify against the linked PDFs.</li>
+      <li>This site is an independent educational recap and is not affiliated with or endorsed by ICW.</li>
+    </ul>
+  </section>
+</Base>

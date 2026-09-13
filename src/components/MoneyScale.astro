@@ -1,0 +1,28 @@
+---
+import { formatIDR, comparables } from "../lib/data";
+
+interface Props {
+  amountIDR: number;
+  label?: string;
+}
+const { amountIDR, label } = Astro.props;
+const comps = comparables(amountIDR).slice(0, 3);
+const max = Math.max(...comps.map((c) => c.value)) || 1;
+---
+<div class="not-prose my-8">
+  {label && <p class="font-display text-lg font-semibold">{label}</p>}
+  <p class="font-display text-4xl font-black text-blood num">{formatIDR(amountIDR)}</p>
+  <ul class="mt-4 space-y-3">
+    {comps.map((c) => (
+      <li class="flex items-baseline gap-3">
+        <span class="num w-40 shrink-0 text-right text-sm font-semibold text-ink/60">
+          {c.value.toLocaleString("en-US")} {c.unit}
+        </span>
+        <span class="h-4 flex-1 border-l-2 border-ink relative">
+          <span class="bar-grow absolute inset-y-0 left-0 bg-blood" style={`width: ${Math.max(2, (c.value / max) * 100)}%`}></span>
+        </span>
+        <span class="text-sm">{c.rendered}</span>
+      </li>
+    ))}
+  </ul>
+</div>

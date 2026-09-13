@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "icw-ledger": {
+      "command": "pnpm",
+      "args": ["mcp"],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}

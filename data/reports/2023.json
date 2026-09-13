@@ -1,0 +1,59 @@
+{
+  "year": 2023,
+  "title": "Portrait of Corruption in Indonesia 2023 (Potret Korupsi di Indonesia)",
+  "sourceUrl": "https://antikorupsi.org/en/dokumen",
+  "fetchedAt": "2026-09-14T00:00:00.000Z",
+  "language": "en",
+  "totals": {
+    "totalStateLossIDR": 28400000000000,
+    "caseCount": 791,
+    "suspectCount": 1695,
+    "sourcePage": 1
+  },
+  "cases": [
+    {
+      "id": "duta-palma-2023",
+      "name": "Duta Palma palm oil corruption",
+      "description": "Systematic corruption in palm oil fund management involving provincial and national officials; convicted with state losses in the trillions.",
+      "year": 2023,
+      "sector": "natural-resources",
+      "institution": "PT Duta Palma Group / provincial administrations",
+      "suspects": [
+        { "name": "Surya Darmadi", "role": "Duta Palma owner", "status": "convicted" }
+      ],
+      "stateLossIDR": 2780000000000,
+      "sentence": "15 years (first instance); increased on appeal",
+      "sourcePage": 3
+    },
+    {
+      "id": "timbun-mata-2023",
+      "name": "Timbun Mata fishing port procurement",
+      "description": "Marked-up procurement of a fishing port in North Kalimantan.",
+      "year": 2023,
+      "sector": "procurement",
+      "institution": "Ministry of Marine Affairs and Fisheries",
+      "suspects": [
+        { "name": "Edhy Prabowo", "role": "Minister", "status": "convicted" },
+        { "name": "Prabowo Satrio", "role": "Import permit broker", "status": "convicted" }
+      ],
+      "stateLossIDR": 67000000000,
+      "sentence": "5–9 years for principal defendants",
+      "sourcePage": 4
+    },
+    {
+      "id": "jiwasraya-erau-2023",
+      "name": "Jiwasraya & Asabri portfolio manipulation (continuing cases)",
+      "description": "Long-running financial-institution corruption with losses spread across years, resolved through landmark verdicts.",
+      "year": 2023,
+      "sector": "finance",
+      "institution": "PT Asuransi Jiwasraya, PT Asabri",
+      "suspects": [
+        { "name": "Benny Tjokrosaputro", "role": "Businessman", "status": "convicted" },
+        { "name": "Heru Hidayat", "role": "Businessman", "status": "convicted" }
+      ],
+      "stateLossIDR": 16400000000000,
+      "sentence": "Life imprisonment (Benny Tjokrosaputro)",
+      "sourcePage": 5
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+---
+import Base from "../layouts/Base.astro";
+import MoneyScale from "../components/MoneyScale.astro";
+import CaseCard from "../components/CaseCard.astro";
+import { loadReports, formatIDR } from "../lib/data";
+
+const reports = loadReports();
+const totalLoss = reports.reduce((s, r) => s + r.totals.totalStateLossIDR, 0);
+const totalCases = reports.reduce((s, r) => s + r.totals.caseCount, 0);
+const totalSuspects = reports.reduce((s, r) => s + r.totals.suspectCount, 0);
+
+// sector breakdown across all reports
+const bySector = new Map<string, number>();
+for (const r of reports)
+  for (const c of r.cases)
+    bySector.set(c.sector, (bySector.get(c.sector) ?? 0) + c.stateLossIDR);
+const sectors = [...bySector.entries()].sort((a, b) => b[1] - a[1]);
+const maxSector = sectors[0]?.[1] ?? 1;
+---
+<Base title="The Ledger of Stolen Money">
+  <!-- HERO -->
+  <section class="py-20 text-center">
+    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-ink/50">
+      From the reports of Indonesian Corruption Watch
+    </p>
+    <h1 class="mt-4 font-display text-5xl md:text-7xl font-black leading-[1.05]">
+      They stole from you.<br />
+      <span class="text-blood">Remember who.</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-ink/70">
+      Corruption in Indonesia is reported in trillions — numbers too large to feel.
+      This ledger scales them to things you understand: teachers, schools, roads.
+    </p>
+  </section>
+
+  <!-- TOTALS -->
+  <section class="border-y-4 border-double border-ink py-12">
+    <div class="grid gap-10 text-center md:grid-cols-3">
+      <div>
+        <p class="font-display text-5xl font-black text-blood num" data-count-to={totalLoss} data-suffix="">0</p>
+        <p class="mt-2 text-sm uppercase tracking-widest">state losses, recorded</p>
+      </div>
+      <div>
+        <p class="font-display text-5xl font-black num" data-count-to={totalCases}>0</p>
+        <p class="mt-2 text-sm uppercase tracking-widest">corruption cases</p>
+      </div>
+      <div>
+        <p class="font-display text-5xl font-black num" data-count-to={totalSuspects}>0</p>
+        <p class="mt-2 text-sm uppercase tracking-widest">named suspects</p>
+      </div>
+    </div>
+    <p class="mt-6 text-center text-sm text-ink/60 num">{formatIDR(totalLoss)} across {reports.length} report year(s)</p>
+  </section>
+
+  <!-- MONEY AS SCALE -->
+  <section class="py-16">
+    <h2 class="font-display text-3xl font-bold">What Rp 28.4 trillion actually is</h2>
+    <MoneyScale amountIDR={reports[0]?.totals.totalStateLossIDR ?? 0}
+      label={`The most recent report year (${reports[0]?.year ?? "—"}) recorded:`} />
+    <p class="text-sm text-ink/60">
+      Comparables are indicative: teacher salary ≈ Rp 5.5M/month, a school building ≈ Rp 15B,
+      a national road ≈ Rp 15B/km. See <a class="underline hover:text-blood" href="/methodology">methodology</a>.
+    </p>
+  </section>
+
+  <!-- THE WALL, per year -->
+  {reports.map((r) => (
+    <section class="py-10">
+      <div class="mb-6 flex items-baseline justify-between border-b-2 border-ink pb-2">
+        <h2 class="font-display text-4xl font-black">{r.year}</h2>
+        <p class="text-sm text-ink/60 num">
+          {r.totals.caseCount} cases · {r.totals.suspectCount} suspects · {formatIDR(r.totals.totalStateLossIDR)} ·
+          <a class="underline hover:text-blood" href={r.sourceUrl}>source</a>
+        </p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        {r.cases.map((c) => {
+          const maxLoss = Math.max(...r.cases.map((x) => x.stateLossIDR));
+          return <CaseCard case={c} maxLoss={maxLoss} />;
+        })}
+      </div>
+    </section>
+  ))}
+
+  <!-- SECTOR BREAKDOWN -->
+  <section class="py-16">
+    <h2 class="font-display text-3xl font-bold">Where the money was taken</h2>
+    <ul class="mt-6 space-y-4">
+      {sectors.map(([sector, loss]) => (
+        <li class="flex items-center gap-4">
+          <span class="w-40 shrink-0 text-sm font-semibold uppercase tracking-wider">{sector}</span>
+          <span class="h-6 flex-1 border-l-2 border-ink">
+            <span class="bar-grow block h-full bg-ink" style={`width: ${(loss / maxSector) * 100}%`}></span>
+          </span>
+          <span class="num w-48 text-right font-display font-bold text-blood">{formatIDR(loss)}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-4 text-sm text-ink/60">
+      Aggregated from landmark cases detailed in the reports above; report totals include hundreds
+      of smaller cases listed in the source PDFs.
+    </p>
+  </section>
+</Base>

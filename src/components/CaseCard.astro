@@ -1,0 +1,50 @@
+---
+import { formatIDR } from "../lib/data";
+import type { Case } from "../schemas/report";
+
+interface Props {
+  case: Case;
+  maxLoss: number; // widest bar in the group
+}
+const { case: c, maxLoss } = Astro.props;
+
+const statusStyle: Record<string, string> = {
+  fugitive: "bg-ink text-paper",
+  suspect: "border border-ink",
+  "on-trial": "bg-ink/10",
+  convicted: "bg-blood text-paper",
+  acquitted: "border border-ink/40 text-ink/60",
+};
+---
+<article class="border-2 border-ink bg-paper p-6">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <h3 class="font-display text-2xl font-bold leading-tight">{c.name}</h3>
+      <p class="text-sm text-ink/60">
+        {c.institution} · {c.year} · <span class="uppercase tracking-wider">{c.sector}</span>
+      </p>
+    </div>
+    <p class="text-right font-display font-black text-blood num shrink-0">
+      {formatIDR(c.stateLossIDR)}
+    </p>
+  </div>
+
+  <div class="mt-3 h-2 bg-ink/10">
+    <div class="bar-grow h-full bg-blood" style={`width: ${Math.max(1, (c.stateLossIDR / maxLoss) * 100)}%`}></div>
+  </div>
+
+  <p class="mt-4 text-[15px] leading-relaxed">{c.description}</p>
+
+  {c.suspects.length > 0 && (
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {c.suspects.map((s) => (
+        <li class={`px-2 py-1 text-xs font-semibold uppercase tracking-wider ${statusStyle[s.status] ?? "border border-ink"}`}>
+          {s.name} — {s.role}
+        </li>
+      ))}
+    </ul>
+  )}
+
+  {c.sentence && <p class="mt-3 text-sm text-ink/70"><strong>Sentence:</strong> {c.sentence}</p>}
+  <p class="mt-3 text-xs text-ink/50">Source: report page {c.sourcePage}</p>
+</article>

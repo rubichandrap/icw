@@ -1,0 +1,29 @@
+{
+  "year": 2024,
+  "title": "ICW Year-End Report 2024 (Laporan Akhir Tahun)",
+  "sourceUrl": "https://antikorupsi.org/en/dokumen",
+  "fetchedAt": "2026-09-14T00:00:00.000Z",
+  "language": "en",
+  "totals": {
+    "totalStateLossIDR": 300000000000000,
+    "caseCount": 443,
+    "suspectCount": 1085,
+    "sourcePage": 1
+  },
+  "cases": [
+    {
+      "id": "timah-2024",
+      "name": "Tin trade corruption (Timah case, continuing)",
+      "description": "Regulatory capture of the tin trading system in Bangka Belitung; among the largest state-loss cases ever recorded.",
+      "year": 2024,
+      "sector": "natural-resources",
+      "institution": "Ministry of Trade / Bangka Belitung administration",
+      "suspects": [
+        { "name": "Harvey Moeis", "role": "Private-sector actor", "status": "convicted" }
+      ],
+      "stateLossIDR": 300000000000000,
+      "sentence": "6.5 years (first instance, widely criticized as too light); under appeal",
+      "sourcePage": 4
+    }
+  ]
+}

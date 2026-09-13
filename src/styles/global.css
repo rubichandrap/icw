@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --color-paper: #f7f4ee;
+  --color-ink: #16130f;
+  --color-blood: #a4161a;
+  --color-rule: #c8c0b0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  /* ledger ruled lines */
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2rem,
+    color-mix(in srgb, var(--color-rule) 35%, transparent) 2rem,
+    color-mix(in srgb, var(--color-rule) 35%, transparent) calc(2rem + 1px)
+  );
+  background-size: 100% 2rem;
+  line-height: 2rem;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* animated count-up bars, driven by CSS + a small script */
+.bar-grow {
+  transform-origin: left;
+  animation: bar-grow 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+}

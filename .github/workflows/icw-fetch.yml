@@ -1,0 +1,43 @@
+name: ICW report fetch
+# Weekly sweep of the trusted ICW document index. The agent parses any new
+# report and opens a pull request — data never reaches the site unreviewed.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fetch-and-parse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Check trusted index for new reports
+        env:
+          TRUSTED_SOURCE_URLS: ${{ vars.TRUSTED_SOURCE_URLS }}
+          TRUSTED_PDF_HOSTS: ${{ vars.TRUSTED_PDF_HOSTS }}
+        run: |
+          pnpm tsx mcp/src/cli.ts list > /tmp/reports.json
+          cat /tmp/reports.json
+
+      - name: Agent parse + open data PR
+        # The agent drives the MCP tools (fetch_report -> extract_report ->
+        # save_report -> verify_data) and opens a PR only if verify_data passes.
+        env:
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm tsx mcp/src/agent-run.ts

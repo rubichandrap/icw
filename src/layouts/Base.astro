@@ -1,0 +1,50 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Who stole what from the people of Indonesia, remembered." } = Astro.props;
+import "../styles/global.css";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="/count-up.js" defer></script>
+  </head>
+  <body>
+    <header class="border-b-2 border-ink">
+      <div class="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
+        <a href="/" class="font-display font-black text-xl tracking-tight">
+          The Ledger <span class="text-blood">of Stolen Money</span>
+        </a>
+        <nav class="flex gap-6 text-sm font-medium uppercase tracking-widest">
+          <a href="/" class="hover:text-blood">The Ledger</a>
+          <a href="/methodology" class="hover:text-blood">Methodology</a>
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-5xl px-6">
+      <slot />
+    </main>
+    <footer class="mt-24 border-t-2 border-ink">
+      <div class="mx-auto max-w-5xl px-6 py-8 text-sm text-ink/70">
+        <p>
+          Figures are extracted from published
+          <a href="https://antikorupsi.org" class="underline hover:text-blood">Indonesian Corruption Watch</a>
+          reports; every number links back to its source page. This site is an independent
+          recap and is not affiliated with ICW.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
